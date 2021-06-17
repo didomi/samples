@@ -1,0 +1,188 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+*{
+  -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+}
+
+body{
+  font-family: Arial, sans-serif;
+  font-size:16px;
+  background-color:#F1F1F1;
+	line-height:1.4em;
+}
+
+#main{
+  width:80%;
+  margin:30px auto;
+  background-color:#FFFFFF;
+  padding: 50px 20px;
+}
+.emphasis{
+	font-weight:bold;
+}
+.youtube-container{
+  position: relative;
+}
+.youtube-container > iframe{
+  display:block;
+}
+
+.youtube-container > .video-consent-overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-color: black;;
+  display:-webkit-box;;
+  display:-ms-flexbox;;
+  display:flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-sizing:border-box;
+          box-sizing:border-box;
+  padding:0 20px;
+  color: white;
+}
+.youtube-container .video-consent-overlay-text{
+  text-align:center;
+}
+.youtube-container .video-consent-overlay-accept-button{
+  margin: 20px 0 0 0;
+  padding: 8px 10px;
+  background-color: blue;
+  cursor:pointer;
+}
+
+h1{
+  text-align:center;
+  font-size:1.5em;
+	font-weight: bold;
+}
+h2{
+  text-align:center;
+  font-size:1em;
+  color:#4D4D4D;
+	margin: 4px 0 0 0;
+}
+h3{
+	text-align:center;
+	margin:30px 0 50px 0;
+}
+a{
+  color:#1a9dd4;
+	display:block;
+	text-decoration:none;
+	font-size:1rem;
+	font-weight: bold;
+}
+a:hover{
+	text-decoration:underline;
+}
+
+.youtube-container{
+	max-width: 560px;
+	margin: 100px auto 0 auto;
+}
+.youtube-container iframe{
+  margin: 0 auto;
+	max-width:100%;
+}
+p{
+  margin: 30px 0 ;
+  text-align:center;
+}
+.interactions{
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+.interactions div{
+  color:white;
+  background-color: #4D4D4D;
+  padding: 10px 20px;
+  cursor:pointer;
+	text-align:center;
+	border-radius:4px;
+}
+
+@media (max-width: 768px) {
+	.interactions{
+		-webkit-box-orient:vertical;
+		-webkit-box-direction:normal;
+		    -ms-flex-direction:column;
+		        flex-direction:column;
+	}
+	.interactions div{
+		margin:0 0 20px 0;
+		width:100%;
+	}
+}
