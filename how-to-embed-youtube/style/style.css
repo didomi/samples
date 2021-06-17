@@ -63,6 +63,7 @@ body{
   font-family: Arial, sans-serif;
   font-size:16px;
   background-color:#F1F1F1;
+	line-height:1.4em;
 }
 
 #main{
@@ -71,7 +72,9 @@ body{
   background-color:#FFFFFF;
   padding: 50px 20px;
 }
-
+.emphasis{
+	font-weight:bold;
+}
 .youtube-container{
   position: relative;
 }
@@ -116,16 +119,28 @@ body{
 
 h1{
   text-align:center;
-  font-size:1.2em;
+  font-size:1.5em;
+	font-weight: bold;
 }
 h2{
   text-align:center;
   font-size:1em;
   color:#4D4D4D;
-  margin:10px 0 0 0;
+	margin: 4px 0 0 0;
+}
+h3{
+	text-align:center;
+	margin:30px 0 50px 0;
 }
 a{
-  color:inherit;
+  color:#1a9dd4;
+	display:block;
+	text-decoration:none;
+	font-size:1rem;
+	font-weight: bold;
+}
+a:hover{
+	text-decoration:underline;
 }
 
 .youtube-container{
