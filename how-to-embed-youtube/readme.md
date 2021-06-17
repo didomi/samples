@@ -86,7 +86,7 @@ It's more convenient to add a html parent tag to encompass all the new elements 
 <!-- Parent tag ".youtube-container" to encompass everything -->
 <div class="youtube-container">
 
-<!-- Youtube video with "data-src" -->
+  <!-- Youtube video with "data-src" -->
   <iframe
   width="560"
   height="315"
@@ -108,7 +108,7 @@ note: As it needs to comply with the regulation, your custom text must to be val
 <!-- Parent tag ".youtube-container" to encompass everything -->
 <div class="youtube-container">
 
-<!-- Youtube video with "data-src" -->
+  <!-- Youtube video with "data-src" -->
   <iframe
   width="560"
   height="315"
@@ -119,7 +119,7 @@ note: As it needs to comply with the regulation, your custom text must to be val
   allowfullscreen>
   </iframe>
 
-<!-- Message & "I accept" button -->
+  <!-- Message & "I accept" button -->
   <div class="video-consent-overlay">
     <div class="video-consent-overlay-text">
       Viewing this video may result in cookies being placed by the vendor of the video platform to which you will be directed.
@@ -183,16 +183,16 @@ This function will take the overlay element `.youtube-container` as a parameter:
 ```javascript
 function playVideoAndHideOverlay(overlay) {
 
-// Get the youtube iframe with a 'data-src' attribute
+  // Get the youtube iframe with a 'data-src' attribute
   var iframe = overlay.querySelector('iframe[data-src]');
 
-// Get the 'data-src' value
+  // Get the 'data-src' value
   var src = iframe.getAttribute('data-src');
 
-// Set the 'data-src' value to the 'src' attribute
+  // Set the 'data-src' value to the 'src' attribute
   iframe.setAttribute('src', src);
 
-// Hide the overlay
+  // Hide the overlay
   overlay.querySelector('.video-consent-overlay').style.display = 'none';
 }
 ```
@@ -204,19 +204,19 @@ Given one specific vendor ID, it will update the status with a positive consent 
 
 function setPositiveConsentStatusForVendor(vendorId) {
 
-// Get all the vendor purposes
+  // Get all the vendor purposes
   var purposes = Didomi.getVendorById(vendorId).purposeIds;
 
-// Create a "transaction"...
+  // Create a "transaction"...
   var transaction = Didomi.openTransaction();
 
-// ... enable the vendor
+  // ... enable the vendor
   transaction.enableVendor(vendorId);
 
-// ... and all his purposes
+  // ... and all his purposes
   transaction.enablePurposes(...purposes);
 
-// update the new status using "commit"
+  // update the new status using "commit"
   transaction.commit();
 
 }
@@ -229,30 +229,30 @@ c) Integrates with Didomi's SDK
 window.didomiOnReady = window.didomiOnReady || [];
 window.didomiOnReady.push(function (Didomi) {
 
-// Subscribe to the vendor status : It triggers the listener each time the status is changed for this vendor.
+  // Subscribe to the vendor status : It triggers the listener each time the status is changed for this vendor.
   Didomi.getObservableOnUserConsentStatusForVendor('c:youtube')
-    .subscribe(function (consentStatus) {
+  .subscribe(function (consentStatus) {
 
-// Check if the "consentStatus" is true (eg. the user agreed to the vendor & his purposes)
-      if (consentStatus === true) {
+    // Check if the "consentStatus" is true (eg. the user agreed to the vendor & his purposes)
+    if (consentStatus === true) {
 
-// Loop into all the ".youtube-container" (even if we only have one in the example)
-          document.querySelectorAll('.youtube-container').forEach(function(video) {
+      // Loop into all the ".youtube-container" (even if we only have one in the example)
+      document.querySelectorAll('.youtube-container').forEach(function(video) {
 
-// call our play & hide function
-            playVideoAndHideOverlay(video);
-
-          })
-
-        }
+        // call our play & hide function
+        playVideoAndHideOverlay(video);
 
       })
 
-// An event listener is attached to each button element
+    }
+
+  })
+
+  // An event listener is attached to each button element
   document.querySelectorAll('.video-consent-overlay-accept-button').forEach(function(button) {
     button.addEventListener('click', function() {
 
-// When the button is clicked, we call the setPositiveConsentStatusForVendor custom function to enable the vendor (Youtube) and all his purposes.
+      // When the button is clicked, we call the setPositiveConsentStatusForVendor custom function to enable the vendor (Youtube) and all his purposes.
       setPositiveConsentStatusForVendor('c:youtube');
 
     })
