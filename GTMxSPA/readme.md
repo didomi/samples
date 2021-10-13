@@ -96,16 +96,16 @@ window.didomiEventListeners.push({
 Didomi's SDK natively send variables to the dataLayer each time the visitor interact with the cookie notice.  
 One of these variables is `didomiVendorsConsent` and it contains the list of vendors that have been accepted
 
-![variable](doc-assets/gtm-variable.png)
-![variable-details](doc-assets/gtm-variable-detail.png)
+![variable](doc-assets/gtm-variable.png | width=300)
+![variable-details](doc-assets/gtm-variable-detail.png | width=300)
 
 
 2. We create the tag.  
 For this example, our "analytic vendor" is just a console.log with the message "the analytic tag has been triggered".
 
 
-![tag](doc-assets/gtm-tag.png)
-![tag-details](doc-assets/gtm-tag-detail.png)
+![tag](doc-assets/gtm-tag.png | width=300)
+![tag-details](doc-assets/gtm-tag-detail.png | width=300)
 
 
 3. We create the trigger.
@@ -114,8 +114,8 @@ The trigger needs to check two conditions :
     AND
     - the analytic vendor has been accepted on the cookie notice. This information can be verified if the vendor SDK-ID is present in the `didomiVendorsConsent` variable.
 
-![trigger](doc-assets/gtm-trigger.png)
-![trigger-details](doc-assets/gtm-trigger-details.png)
+![trigger](doc-assets/gtm-trigger.png | width=300)
+![trigger-details](doc-assets/gtm-trigger-details.png | width=300)
 
 
 
