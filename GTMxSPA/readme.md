@@ -1,6 +1,6 @@
 # How to condition tags in GoogleTagManager (GTM) in a Single Page Application (SPA) context
 
-Tracking events from GTM in a SPA context is different from regular websites because there is no actual page reloading when the visitor navigates through the different sections of the site.
+The way to track events in GTM in SPA is different from regular websites because there is no actual page reloading when the visitor navigates through the different sections of the site.
 
 Only certain parts of the content are refreshed, and GTM does not natively records these modifications. A typical usecase is measuring pageviews with an analytics tool. You probably want to trigger analytics each time the visitor navigate to an other "page" of your SPA.
 
@@ -10,7 +10,12 @@ In the following example, we will describe one solution to do so.
 
 ## What we do
 
-1- We create a custom event for the dataLayer
+We have to write some JavaScript on the front-end side to send a custom event to the dataLayer.
+We also have to create a variable and a custom trigger in GTM.
+
+### Front-End: JavaScript
+
+1- We create the custom event for the dataLayer
 
 #### **`index.html`**
 ```JavaScript
@@ -29,6 +34,7 @@ window.didomiOnReady.push(function (Didomi) {
 ```
 
 2- We connect to the SPA Javascript logic to send this GTM "Custom Trigger" each time we need to activate our analytic tool.
+
 There are **3 triggers**:
 
 ### Trigger n°1:  page load
@@ -80,3 +86,12 @@ window.didomiEventListeners.push({
   }
 });
 ```
+
+
+
+### GTM: Variable and Trigger
+
+1- We create the tag
+
+![tag](doc-assets/gtm-tag.png)
+![tag-details](doc-assets/gtm-tag.png)
