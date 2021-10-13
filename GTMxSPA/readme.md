@@ -96,7 +96,7 @@ window.didomiEventListeners.push({
 Didomi's SDK natively send variables to the dataLayer each time the visitor interact with the cookie notice.  
 One of these variables is `didomiVendorsConsent` and it contains the list of vendors that have been accepted
 
-![variable](doc-assets/gtm-variable.png | width=300)
+<img src="doc-assets/gtm-variable.png" width=300>
 ![variable-details](doc-assets/gtm-variable-detail.png | width=300)
 
 
