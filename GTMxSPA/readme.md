@@ -8,14 +8,14 @@ There are many ways to track these changes with Didomi web SDK.
 In the following example, we will describe one solution to do so.
 
 
-## What we do
+### What we do
 
 We have to write some JavaScript on the front-end side to send a custom event to the dataLayer.
 We also have to create a variable and a custom trigger in GTM.
 
-### Front-End: JavaScript
+## Front-End: JavaScript
 
-1- We create the custom event for the dataLayer
+We create the custom event for the dataLayer
 
 #### **`index.html`**
 ```JavaScript
@@ -33,7 +33,7 @@ window.didomiOnReady.push(function (Didomi) {
 });
 ```
 
-2- We connect to the SPA Javascript logic to send this GTM "Custom Trigger" each time we need to activate our analytic tool.
+We connect to the SPA Javascript logic to send this GTM "Custom Trigger" each time we need to activate our analytic tool.
 
 There are **3 triggers**:
 
@@ -77,7 +77,7 @@ Array.from(document.querySelectorAll('[data-entry]')).forEach(function(button) {
 #### **`index.html`**
 ```JavaScript
 /*
-Adding a didomiEventListeners to watch the Didomi SDK's 'consent.changed' allows to send again the custom event in the dataLayer when the user changes his consent status on the cookie notice.
+Adding a didomiEventListeners to watch the Didomi SDK's 'consent.changed' events allows to send again the custom event in the dataLayer when the user changes his consent status on the cookie notice.
 */
 window.didomiEventListeners.push({
   event: 'consent.changed',
@@ -89,9 +89,34 @@ window.didomiEventListeners.push({
 
 
 
-### GTM: Variable and Trigger
+## GTM: Variable and Trigger
 
-1- We create the tag
+
+1. We create the variable.
+Didomi's SDK natively send variables to the dataLayer each time the visitor interact with the cookie notice.  
+One of these variables is `didomiVendorsConsent` and it contains the list of vendors that have been accepted
+
+![variable](doc-assets/gtm-variable.png)
+![variable-details](doc-assets/gtm-variable-details.png)
+
+
+2. We create the tag.  
+For this example, our "analytic vendor" is just a console.log with the message "the analytic tag has been triggered".
+
 
 ![tag](doc-assets/gtm-tag.png)
-![tag-details](doc-assets/gtm-tag.png)
+![tag-details](doc-assets/gtm-tag-detail.png)
+
+
+3. We create the trigger.
+The trigger needs to check two conditions :
+    - the event `custom_analytic_event` has been sent to the dataLayer
+    AND
+    - the analytic vendor has been accepted on the cookie notice. This information can be verified if the vendor SDK-ID is present in the `didomiVendorsConsent` variable.
+
+![trigger](doc-assets/gtm-trigger.png)
+![trigger-details](doc-assets/gtm-trigger-details.png)
+
+
+
+And that's it.
