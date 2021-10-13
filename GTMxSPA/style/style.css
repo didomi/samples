@@ -90,10 +90,9 @@ nav > div:hover{
 
 footer{
   display:flex;
-  align-items:center;
   justify-content:center;
   background-color: #1d4153;
-  padding: 50px 60px;
+  padding: 10px 60px 50px 90px;
   width: 100%;
   margin: 0 auto;
   background-image: url('../images/footer.svg');
@@ -101,6 +100,11 @@ footer{
   background-repeat: no-repeat;
   background-position-x: left;
   background-position-y: bottom;
+}
+footer a{
+  color: #d9d9d9;
+  text-decoration: none;
+  font-size: 1.2em;
 }
 #mobile_menu{
   display:none;
