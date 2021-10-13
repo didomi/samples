@@ -26,6 +26,8 @@
     })(window,document,'script','dataLayer','GTM-5SFCPWF');</script>
     <!-- End Google Tag Manager -->
 
+    <script src="script/menu.js"></script>
+
   </head>
   <body>
 
@@ -54,32 +56,62 @@
 
     <footer></footer>
 
-
-    <script src="script/menu.js"></script>
+    <!-- The SPA logic JS file (very simple) -->
     <script src="script/singlePageApp.js"></script>
 
     <script>
 
-      function sendEventToDataLayer() {
 
-        window.dataLayer = window.dataLayer || [];
+      /*
+      Variables initialization.
+      This syntax is used to avoid overriding the variables if they have already been defined.
+      */
+      window.dataLayer = window.dataLayer || [];
+      window.didomiOnReady = window.didomiOnReady || [];
+      window.didomiEventListeners = window.didomiEventListeners || [];
 
-        window.didomiOnReady = window.didomiOnReady || [];
 
-        window.didomiOnReady.push(function (Didomi) {
+      /*
+      This function is in charge of sending our custom event (named "custom_analytic_event") in the dataLayer
+      */
+      window.didomiOnReady.push(function (Didomi) {
+        window.sendEventToDataLayer = function() {
           dataLayer.push(
             {
-              'event': 'custom_analytic_event',
-              'page': window.location.hash
+              'event': 'custom_analytic_event'
             }
           );
-        });
-      }
-
-      loadPage('page1', function() {
-        sendEventToDataLayer()
+        }
       });
 
+
+      /*
+      Adding a didomiEventListeners to watch the Didomi SDK's 'consent.changed' allows to send again the custom event in the dataLayer when the user changes his consent status on the cookie notice.
+      */
+      window.didomiEventListeners.push({
+        event: 'consent.changed',
+        listener: function (context) {
+          sendEventToDataLayer();
+        }
+      });
+
+
+      /*
+      The "loadPage" function refers to the internal JavaScript logic that manages the loading of SPA pages.
+      It has a callback which is executed right after the content loads.
+      (It's defined in the "script/singlePageApp.js" file)
+      The following is executed right after the page is loaded, it charges the 'page1' if the first parameter is undefined.
+      */
+      window.didomiOnReady.push(function (Didomi) {
+        loadPage(window.location.hash ? window.location.hash.replace('#', '') : 'page1', function() {
+          sendEventToDataLayer()
+        })
+      });
+
+
+      /*
+      Each click on an entry in the top menu triggers the 'sendEventToDataLayer' function.
+      */
       Array.from(document.querySelectorAll('[data-entry]')).forEach(function(button) {
         button.addEventListener('click', function() {
 

@@ -21,8 +21,11 @@ function loadPage(page, success) {
       makePage(JSON.parse(this.responseText));
       window.location.hash = page
 
+      /*
+      Callback function
+      */
       success();
-      
+
     }
     xmlHttp.open('GET', 'pages/' + page + '.json');
     xmlHttp.send();
