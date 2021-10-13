@@ -7,6 +7,8 @@ Only certain parts of the content are refreshed, and GTM does not natively recor
 There are many ways to track these changes with Didomi web SDK.  
 In the following example, we will describe one solution to do so.
 
+Here is a GTM preview of the result : [GTM Preview](https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429)
+And here is the link of the SPA : [SPA](tobedefined)
 
 ### What we do
 
