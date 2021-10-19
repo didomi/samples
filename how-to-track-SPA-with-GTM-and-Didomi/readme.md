@@ -8,8 +8,8 @@ There are many ways to monitor these types of events.
 In the following example, we will describe how to achieve this by configuring *custom triggers* in GTM.
 
 #### Links
-Here is a GTM preview of the result : [GTM Preview](https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429)
-And here is the link of the SPA : [SPA](tobedefined)
+Here is a GTM preview of the result : [https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429](https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429)
+And here is the link of the SPA : [https://didomi.github.io/samples/how-to-track-SPA-with-GTM-and-Didomi/](https://didomi.github.io/samples/how-to-track-SPA-with-GTM-and-Didomi/)
 
 ### What we do
 
@@ -128,5 +128,5 @@ The trigger needs to check two conditions :
 
 ### Result
 
-The console.log is triggered each time the visitor navigates from one section to another. 
+The console.log is triggered each time the visitor navigates from one section to another.
 <img src="doc-assets/gtm-spa-clog.gif" width=500>
