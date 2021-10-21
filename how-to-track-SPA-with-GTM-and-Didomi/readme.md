@@ -2,10 +2,10 @@
 
 In SPAs, the way of tracking events with GTM differs from the way of tracking on traditional websites because there is no real page reload as the visitor navigates through the different sections of the site.
 
-Only certain parts of the content are refreshed, and natively, GTM does not trigger anything when these changes occur. A typical use case is to measure page views with an analytics tool. In general, we want to trigger this measurement on each "page viewed" of the SPA site.
+Only certain parts of the content are refreshed, and natively, GTM does not trigger anything when these changes occur. A typical use case is to measure page views with an analytics tool. In general, we want to trigger this measurement on each "page viewed" of the SPA site. As you’re evolving in a GDPR context and using Didomi as a CMP, those page views measurements also need to be conditioned to consent.
 
 There are many ways to monitor these types of events.
-In the following example, we will describe how to achieve this by configuring *custom triggers* in GTM.
+In the following example, we will describe how to achieve this by configuring *custom triggers* in GTM to both measure your events and make sure you are compliant while doing so.
 
 #### Links
 Here is a GTM preview of the result : [https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429](https://tagassistant.google.com/#/?source=TAG_MANAGER&id=GTM-5SFCPWF&gtm_auth=DxuoYm41p8bX99SSZj3_8A&gtm_preview=env-9&cb=5547747675045429)
