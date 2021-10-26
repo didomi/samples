@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   window.addEventListener('scroll', function(e) {
-    var dist = document.documentElement.scrollTop;
-    if(dist == 0) {
+    var distance = document.documentElement.scrollTop;
+    if(distance == 0) {
       document.getElementsByTagName('header')[0].setAttribute('class', '')
     }
     else{

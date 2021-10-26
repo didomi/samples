@@ -101,7 +101,7 @@ window.didomiEventListeners.push({
 
 
 1. We create the variable.
-Didomi's SDK natively send variables to the dataLayer each time the visitor interact with the cookie notice.  
+Didomi's SDK natively send variables to the dataLayer each time the visitor interacts with the cookie notice.  
 One of these variables is `didomiVendorsConsent` and it contains the list of vendors that have been accepted
 
 <img src="doc-assets/gtm-variable.png" width=500>
@@ -109,7 +109,7 @@ One of these variables is `didomiVendorsConsent` and it contains the list of ven
 
 
 2. We create the tag.  
-For this example, our analytics tool is just a `console.log()` file that sends the message “analytics tag has been triggered”. Each time it is triggered, the console.log message is printed in the browser console.
+For this example, our analytics tool is just a `console.log()` file that sends the message “analytics tag has been triggered”. Each time it is triggered, the `console.log()` message is printed in the browser console.
 
 
 <img src="doc-assets/gtm-tag.png" width=500>
