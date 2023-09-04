@@ -1,0 +1,27 @@
+{
+  "name": "updatemultiregsnotice",
+  "version": "1.0.0",
+  "description": "Update vendor IDs for a multi regulations notice",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "prettier": "prettier --write ."
+  },
+  "prettier": {
+    "printWidth": 1000
+  },
+  "author": "Pierre Vanoverschelde",
+  "license": "ISC",
+  "dependencies": {
+    "bent": "^7.3.12",
+    "prettier": "^3.0.0"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
