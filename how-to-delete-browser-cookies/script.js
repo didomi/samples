@@ -2,7 +2,16 @@
  * The list of cookies to keep
  */
 (function () {
+  /**
+   * Please keep in mind that the default cookies names can be changed:
+   * https://developers.didomi.io/cmp/web-sdk/consent-notice/cookies#cookie-name
+   * and you need to also add the didomi_token_${regulation} to this list if you have other non GDPR regulations.
+   * For instance when having CCPA, the default cookie name is didomi_token_ccpa.
+   */
   var itemsToKeep = ["euconsent-v2", "didomi_token"];
+  /**
+   * Use this variable if you need to keep cookies matching a specific pattern
+   */
   var itemsToKeepRegex = /some_regex_[a-z0-9]*/;
 
   /**
@@ -34,31 +43,21 @@
    * Check if all vendor and purposes are disabled
    */
   var areAllVendorsAndPurposesDisabled = function () {
-    var enabledEntities = [];
-    var disabledEntities = [];
     var data = window.Didomi.getUserStatus();
 
-    data.vendors.consent.enabled.forEach(function (entity) {
-      enabledEntities.push(entity);
-    });
-
-    data.purposes.consent.enabled.forEach(function (entity) {
-      enabledEntities.push(entity);
-    });
-
-    data.vendors.consent.disabled.forEach(function (entity) {
-      disabledEntities.push(entity);
-    });
-
-    data.purposes.consent.disabled.forEach(function (entity) {
-      disabledEntities.push(entity);
-    });
+    var vendorsEnabledNumber = data.vendors.consent.enabled.length;
+    var vendorsDisabledNumber = data.vendors.consent.disabled.length;
+    var purposesEnabledNumber = data.purposes.consent.enabled.length;
+    var purposesDisabledNumber = data.purposes.consent.disabled.length;
 
     /**
      * We check that we don't have any enabled entities
      * and that disabled entities are present
      */
-    return enabledEntities.length === 0 && disabledEntities.length > 0;
+    return (
+      vendorsEnabledNumber + purposesEnabledNumber === 0 &&
+      vendorsDisabledNumber + purposesDisabledNumber > 0
+    );
   };
 
   var consentEventsCount = 0;

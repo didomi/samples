@@ -1,4 +1,4 @@
-# How to delete cookies from the browser.
+# How to delete cookies from the browser
 
 Insert the file ```script.js``` of this repository anywhere in your HTML.
 
