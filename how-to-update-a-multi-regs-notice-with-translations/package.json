@@ -1,0 +1,20 @@
+{
+  "name": "update-multiregs-consent-notice-with-translations",
+  "version": "1.0.0",
+  "description": "Update a multi-regulations consent notice with translations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "prettier": "prettier --write ."
+  },
+  "prettier": {
+    "printWidth": 200
+  },
+  "author": "Pierre Vanoverschelde",
+  "license": "ISC",
+  "dependencies": {
+    "bent": "^7.3.12",
+    "fs": "^0.0.1-security",
+    "prettier": "^3.0.0"
+  }
+}
