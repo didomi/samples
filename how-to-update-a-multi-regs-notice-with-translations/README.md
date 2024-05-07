@@ -4,7 +4,7 @@ This guide demonstrates how to use a script to update the content of a multi-reg
 
 ## Prerequisites
 
-- You need to have Node.js installed on your system to run the script.
+- Node.js 16 or later
 
 ## Installation
 
@@ -16,40 +16,76 @@ This guide demonstrates how to use a script to update the content of a multi-reg
 
 To set up the script correctly, follow these steps:
 
-1. Update the file named `config.js` with your specific settings in the folder `src` of the project root directory.
+1. Update the `config.js` file with your specific settings in the folder `src/config` of the project root directory.
 
 ```javascript
 module.exports = {
+  // Base URL of the Didomi API
   baseUrl: "https://api.didomi.io/v1",
-  token: "<YOUR_API_TOKEN>", // Replace with your actual API token received from Didomi
 
-  noticeId: "<NOTICE_ID>", // ID of the notice you want to update
-  organizationId: "<ORGANIZATION_ID>", // Your organization ID on Didomi
-  regulationId: "<REGULATION_ID>", // e.g., 'gdpr', 'cpra', etc. The target regulation ID
+  // ...
 
-  gdprFilePath: "<REG_CONTENT_FILE_PATH>",
+  // The identifier for the notice you want to update
+  noticeId: "<NOTICE_ID>", // Replace with the actual Notice ID
 
-  action: "<PULL_OR_PUSH>", // `pull` or `push`
+  // The identifier of your organization within Didomi
+  organizationId: "<ORGANIZATION_ID>", // Replace with the actual Organization ID
 };
 ```
 
-3. Replace placeholder text such as `<YOUR_API_TOKEN>`, `<NOTICE_ID>`, and others with actual values relevant to your environment.
+2. Create a new `secrets.js` file in the folder `src/config`. You can copy the content of the template file `secrets.template.js`.
 
-4. Create a new folder `translations` and first `pull` the content of the default regulation config specified.
+```javascript
+module.exports = {
+  // Secrets to authenticate with the Didomi API
+  id: "<PRIVATE_API_KEY_ID>", // Replace with your actual API Key ID
 
-5. Replace the content pulled with the translations you want to update and `push` the content (you will need to update the configuration and specify the regulation config keys to update in the script).
+  secret: "<PRIVATE_API_KEY_SECRET>", // Replace with your actual API Key Secret
+};
+```
+
+3. Replace placeholder texts from both files such as `<YOUR_API_TOKEN>`, `<NOTICE_ID>`, `<PRIVATE_API_KEY_ID>`, and others with actual values relevant to your environment.
 
 ## Usage
 
-Run the script with the following command line instruction while inside the project folder:
+This project supports handling translations for the following entities:
 
-```sh
-node index.js
+- [Purposes](https://api.didomi.io/docs/#/purposes/get_metadata_purposes)
+- [Notice Configs](https://api.didomi.io/docs/#/notices/get_widgets_notices_configs)
+
+Each entity, supports two types of commands:
+
+- `pull`: Fetching the entity from the Didomi API using the specified configuration and downloading the translatable properties into a JSON file.
+- `push`: Reading a translations JSON file and updating the entity in the Didomi API using the specified configuration. Keep in mind that a input JSON file must exist before executing this command.
+
+### Commands
+
+There are four (4) commands currently available in this project:
+
+**1. Pull translations for a notice config**
+
+```shell
+npm run notice:pull
+# Stores translations in data/notice_translations_input.json
 ```
 
-When executed, the script will:
+**2. Push translations for a notice config**
 
-1. Fetch the draft configuration for your notice, as specified in the `config.js`.
-2. Search within that configuration for the default regulation config of the `regulationId`.
-3. Employ the translations provided in your `translations/<REGULATION_ID>.json` file to update the content where necessary.
-4. Initiate a PATCH HTTP request to apply the updated configuration to the draft notice.
+```shell
+npm run notice:push
+# Reads translations from data/notice_translations_output.json
+```
+
+**3. Pull translations for the list of purposes**
+
+```shell
+npm run purposes:push
+# Stores translations in data/purposes_translations_input.json
+```
+
+**4. Push translations for the list of purposes**
+
+```shell
+npm run purposes:pull
+# Reads translations from data/purposes_translations_output.json
+```
