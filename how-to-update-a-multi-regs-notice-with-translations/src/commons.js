@@ -24,7 +24,7 @@ const fetchAPIToken = async () => {
 /**
  * Return a translatable text with only the default (EN) language.
  */
-const keepOnlyDefaultLanguage = (object) => ({ en: object?.en });
+const getDefaultLanguage = (object) => object?.en;
 
 /**
  * Helper to write an object to a JSON file.
@@ -40,6 +40,6 @@ const writeJSONFile = (path, data) =>
 
 module.exports = {
   fetchAPIToken,
-  keepOnlyDefaultLanguage,
+  getDefaultLanguage,
   writeJSONFile,
 };
