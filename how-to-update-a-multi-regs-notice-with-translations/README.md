@@ -56,7 +56,7 @@ This project supports handling translations for the following entities:
 Each entity, supports two types of commands:
 
 - `pull`: Fetching the entity from the Didomi API using the specified configuration and downloading the translatable properties into a JSON file.
-- `push`: Reading a translations JSON file and updating the entity in the Didomi API using the specified configuration. Keep in mind that a input JSON file must exist before executing this command.
+- `push`: Reading a translations JSON file for a given language and updating the entity in the Didomi API using the specified configuration. The `--language` and `--filename` command-line parameters must be specified.
 
 ### Commands
 
@@ -72,20 +72,20 @@ npm run notice:pull
 **2. Push translations for a notice config**
 
 ```shell
-npm run notice:push
-# Reads translations from data/notice_translations_output.json
+npm run notice:push --language=fr --filename=notice_translations_fr.json
+# Reads translations from notice_translations_fr.json
 ```
 
 **3. Pull translations for the list of purposes**
 
 ```shell
-npm run purposes:push
+npm run purposes:pull
 # Stores translations in data/purposes_translations_input.json
 ```
 
 **4. Push translations for the list of purposes**
 
 ```shell
-npm run purposes:pull
-# Reads translations from data/purposes_translations_output.json
+npm run purposes:push --language=es --filename=purposes_translations_es.json
+# Reads translations from purposes_translations_es.json
 ```
