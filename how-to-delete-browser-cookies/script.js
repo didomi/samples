@@ -43,12 +43,26 @@
    * Check if all vendor and purposes are disabled
    */
   var areAllVendorsAndPurposesDisabled = function () {
-    var data = window.Didomi.getUserStatus();
+    var data = window.Didomi.getCurrentUserStatus();
 
-    var vendorsEnabledNumber = data.vendors.consent.enabled.length;
-    var vendorsDisabledNumber = data.vendors.consent.disabled.length;
-    var purposesEnabledNumber = data.purposes.consent.enabled.length;
-    var purposesDisabledNumber = data.purposes.consent.disabled.length;
+    /**
+     * List of vendor IDs that cannot be disabled.
+     * Add any required vendors here, separated by commas, using their API vendor IDs.
+     */
+    var excludedIds = ["confianti-AzyiCpeD"];
+
+    var vendorsEnabledNumber = Object.values(data.vendors).filter(
+      (vendor) => vendor.enabled && !excludedIds.includes(vendor.id),
+    ).length;
+    var vendorsDisabledNumber = Object.values(data.vendors).filter(
+      (vendor) => !vendor.enabled && !excludedIds.includes(vendor.id),
+    ).length;
+    var purposesEnabledNumber = Object.values(data.purposes).filter(
+      (purpose) => purpose.enabled,
+    ).length;
+    var purposesDisabledNumber = Object.values(data.purposes).filter(
+      (purpose) => !purpose.enabled,
+    ).length;
 
     /**
      * We check that we don't have any enabled entities
@@ -114,7 +128,7 @@
               itemsToKeep.indexOf(localStorageItemName) === -1 &&
               !localStorageItemName.match(itemsToKeepRegex)
             );
-          }
+          },
         );
 
         /**
