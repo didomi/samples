@@ -49,7 +49,7 @@
      * List of vendor IDs that cannot be disabled.
      * Add any required vendors here, separated by commas, using their API vendor IDs.
      */
-    var excludedIds = ["confianti-AzyiCpeD"];
+    var excludedIds = ["<vendor_API_ID_to_exclude>"];
 
     var vendorsEnabledNumber = Object.values(data.vendors).filter(
       (vendor) => vendor.enabled && !excludedIds.includes(vendor.id),
