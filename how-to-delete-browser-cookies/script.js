@@ -1,4 +1,25 @@
 /**
+ * Polyfill logic for Object.values for IE11.
+ * In modern browsers, you can use Object.values directly.
+ *
+ * @param {Object} obj - The object whose values are to be returned.
+ * @returns {Array} An array of the object's own enumerable property values.
+ * @throws {TypeError} If obj is null or undefined.
+ */
+function getObjectValues(obj) {
+  if (obj === null || obj === undefined) {
+    throw new TypeError("Cannot convert undefined or null to object");
+  }
+  var result = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      result.push(obj[key]);
+    }
+  }
+  return result;
+}
+
+/**
  * The list of cookies to keep
  */
 (function () {
@@ -51,17 +72,28 @@
      */
     var excludedIds = ["<vendor_API_ID_to_exclude>"];
 
-    var vendorsEnabledNumber = Object.values(data.vendors).filter(
-      (vendor) => vendor.enabled && !excludedIds.includes(vendor.id),
+    var vendorsEnabledNumber = getObjectValues(data.vendors).filter(
+      function (vendor) {
+        return vendor.enabled && !excludedIds.includes(vendor.id);
+      },
     ).length;
-    var vendorsDisabledNumber = Object.values(data.vendors).filter(
-      (vendor) => !vendor.enabled && !excludedIds.includes(vendor.id),
+
+    var vendorsDisabledNumber = getObjectValues(data.vendors).filter(
+      function (vendor) {
+        return !vendor.enabled && !excludedIds.includes(vendor.id);
+      },
     ).length;
-    var purposesEnabledNumber = Object.values(data.purposes).filter(
-      (purpose) => purpose.enabled,
+
+    var purposesEnabledNumber = getObjectValues(data.purposes).filter(
+      function (purpose) {
+        return purpose.enabled;
+      },
     ).length;
-    var purposesDisabledNumber = Object.values(data.purposes).filter(
-      (purpose) => !purpose.enabled,
+
+    var purposesDisabledNumber = getObjectValues(data.purposes).filter(
+      function (purpose) {
+        return !purpose.enabled;
+      },
     ).length;
 
     /**
