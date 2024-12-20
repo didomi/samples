@@ -1,4 +1,25 @@
 /**
+ * Polyfill logic for Object.values for IE11.
+ * In modern browsers, you can use Object.values directly.
+ *
+ * @param {Object} obj - The object whose values are to be returned.
+ * @returns {Array} An array of the object's own enumerable property values.
+ * @throws {TypeError} If obj is null or undefined.
+ */
+function getObjectValues(obj) {
+  if (obj === null || obj === undefined) {
+    throw new TypeError("Cannot convert undefined or null to object");
+  }
+  var result = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      result.push(obj[key]);
+    }
+  }
+  return result;
+}
+
+/**
  * The list of cookies to keep
  */
 (function () {
@@ -43,12 +64,37 @@
    * Check if all vendor and purposes are disabled
    */
   var areAllVendorsAndPurposesDisabled = function () {
-    var data = window.Didomi.getUserStatus();
+    var data = window.Didomi.getCurrentUserStatus();
 
-    var vendorsEnabledNumber = data.vendors.consent.enabled.length;
-    var vendorsDisabledNumber = data.vendors.consent.disabled.length;
-    var purposesEnabledNumber = data.purposes.consent.enabled.length;
-    var purposesDisabledNumber = data.purposes.consent.disabled.length;
+    /**
+     * List of vendor IDs that cannot be disabled.
+     * Add any required vendors here, separated by commas, using their API vendor IDs.
+     */
+    var excludedIds = ["<vendor_API_ID_to_exclude>"];
+
+    var vendorsEnabledNumber = getObjectValues(data.vendors).filter(
+      function (vendor) {
+        return vendor.enabled && !excludedIds.includes(vendor.id);
+      },
+    ).length;
+
+    var vendorsDisabledNumber = getObjectValues(data.vendors).filter(
+      function (vendor) {
+        return !vendor.enabled && !excludedIds.includes(vendor.id);
+      },
+    ).length;
+
+    var purposesEnabledNumber = getObjectValues(data.purposes).filter(
+      function (purpose) {
+        return purpose.enabled;
+      },
+    ).length;
+
+    var purposesDisabledNumber = getObjectValues(data.purposes).filter(
+      function (purpose) {
+        return !purpose.enabled;
+      },
+    ).length;
 
     /**
      * We check that we don't have any enabled entities
@@ -114,7 +160,7 @@
               itemsToKeep.indexOf(localStorageItemName) === -1 &&
               !localStorageItemName.match(itemsToKeepRegex)
             );
-          }
+          },
         );
 
         /**
