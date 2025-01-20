@@ -190,19 +190,22 @@ Given one specific vendor ID, it will update the status with a positive consent 
 
 ```javascript
 function setPositiveConsentStatusForVendor(vendorId) {
+  // Get the vendor by ID
+  var didomiId = Didomi.getVendorById(vendorId).didomiId;
+
   // Get all the vendor purposes
   var purposes = Didomi.getVendorById(vendorId).purposeIds;
 
   // Create a "transaction"...
-  var transaction = Didomi.openTransaction();
+  var transaction = Didomi.openCurrentUserStatusTransaction();
 
   // ... enable the vendor
-  transaction.enableVendor(vendorId);
+  transaction.enableVendor(didomiId);
 
   // ... and all his purposes
-  transaction.enablePurposes(...purposes);
+  transaction.enablePurposes(purposes);
 
-  // update the new status using "commit"
+  // send the new status using "commit"
   transaction.commit();
 }
 ```
