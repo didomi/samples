@@ -1,62 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>How to condition Youtube (with Didomi)</title>
     <script type="text/javascript">
-    window.gdprAppliesGlobally=true;(function(){function a(e){if(!window.frames[e]){if(document.body&&document.body.firstChild){var t=document.body;var n=document.createElement("iframe");n.style.display="none";n.name=e;n.title=e;t.insertBefore(n,t.firstChild)}
-          else{setTimeout(function(){a(e)},5)}}}function e(n,r,o,c,s){function e(e,t,n,a){if(typeof n!=="function"){return}if(!window[r]){window[r]=[]}var i=false;if(s){i=s(e,t,n)}if(!i){window[r].push({command:e,parameter:t,callback:n,version:a})}}e.stub=true;function t(a){if(!window[n]||window[n].stub!==true){return}if(!a.data){return}
-            var i=typeof a.data==="string";var e;try{e=i?JSON.parse(a.data):a.data}catch(t){return}if(e[o]){var r=e[o];window[n](r.command,r.parameter,function(e,t){var n={};n[c]={returnValue:e,success:t,callId:r.callId};a.source.postMessage(i?JSON.stringify(n):n,"*")},r.version)}}
-            if(typeof window[n]!=="function"){window[n]=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}}e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");a("__tcfapiLocator");(function(e,tgt){
-            var t=document.createElement("script");t.id="spcloader";t.type="text/javascript";t.async=true;t.src="https://sdk.privacy-center.org/"+e+"/loader.js?target_type=notice&target="+tgt;t.charset="utf-8";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)})("106fb039-3a28-4693-aaf0-e0545b1868d2","ckzUtC8w")})();
+      window.gdprAppliesGlobally = true;
+      (function () {
+        function a(e) {
+          if (!window.frames[e]) {
+            if (document.body && document.body.firstChild) {
+              var t = document.body;
+              var n = document.createElement("iframe");
+              n.style.display = "none";
+              n.name = e;
+              n.title = e;
+              t.insertBefore(n, t.firstChild);
+            } else {
+              setTimeout(function () {
+                a(e);
+              }, 5);
+            }
+          }
+        }
+        function e(n, r, o, c, s) {
+          function e(e, t, n, a) {
+            if (typeof n !== "function") {
+              return;
+            }
+            if (!window[r]) {
+              window[r] = [];
+            }
+            var i = false;
+            if (s) {
+              i = s(e, t, n);
+            }
+            if (!i) {
+              window[r].push({
+                command: e,
+                parameter: t,
+                callback: n,
+                version: a,
+              });
+            }
+          }
+          e.stub = true;
+          function t(a) {
+            if (!window[n] || window[n].stub !== true) {
+              return;
+            }
+            if (!a.data) {
+              return;
+            }
+            var i = typeof a.data === "string";
+            var e;
+            try {
+              e = i ? JSON.parse(a.data) : a.data;
+            } catch (t) {
+              return;
+            }
+            if (e[o]) {
+              var r = e[o];
+              window[n](
+                r.command,
+                r.parameter,
+                function (e, t) {
+                  var n = {};
+                  n[c] = { returnValue: e, success: t, callId: r.callId };
+                  a.source.postMessage(i ? JSON.stringify(n) : n, "*");
+                },
+                r.version,
+              );
+            }
+          }
+          if (typeof window[n] !== "function") {
+            window[n] = e;
+            if (window.addEventListener) {
+              window.addEventListener("message", t, false);
+            } else {
+              window.attachEvent("onmessage", t);
+            }
+          }
+        }
+        e("__tcfapi", "__tcfapiBuffer", "__tcfapiCall", "__tcfapiReturn");
+        a("__tcfapiLocator");
+        (function (e, tgt) {
+          var t = document.createElement("script");
+          t.id = "spcloader";
+          t.type = "text/javascript";
+          t.async = true;
+          t.src =
+            "https://sdk.privacy-center.org/" +
+            e +
+            "/loader.js?target_type=notice&target=" +
+            tgt;
+          t.charset = "utf-8";
+          var n = document.getElementsByTagName("script")[0];
+          n.parentNode.insertBefore(t, n);
+        })("106fb039-3a28-4693-aaf0-e0545b1868d2", "ckzUtC8w");
+      })();
     </script>
 
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.css" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
     <div id="main">
-
-
       <h1>How to condition Youtube with Didomi SDK</h1>
 
       <div>
         <h2>
           <!-- Url to README.md -->
-          <a href="https://github.com/didomi/samples/blob/main/how-to-embed-youtube/readme.md" target="_blank">Read our guide</a>
+          <a
+            href="https://github.com/didomi/samples/blob/main/how-to-embed-youtube/readme.md"
+            target="_blank"
+            >Read our guide</a
+          >
         </h2>
 
         <h3>
           <span class="">This page is the result after modifications.</span>
-          <a href="./index-initial-state.html" target="_blank">You can see the original state here.</a>
+          <a href="./index-initial-state.html" target="_blank"
+            >You can see the original state here.</a
+          >
         </h3>
 
         <p>
-          You can change your consent signal using the cookie notice to trigger / block the video.<br>
+          You can change your consent signal using the cookie notice to trigger
+          / block the video.<br />
           Use the "reset consent" button to reset your consent status.
         </p>
 
-
         <div class="interactions">
           <div onclick="Didomi.notice.show();">Open the notice</div>
-          <div onclick="Didomi.reset();document.location.reload();">Reset consent</div>
+          <div onclick="Didomi.reset();document.location.reload();">
+            Reset consent
+          </div>
         </div>
         <div class="youtube-container">
           <iframe
-          width="560"
-          height="315"
-          data-src="https://www.youtube.com/embed/QkFKwFhhxhI"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
+            width="560"
+            height="315"
+            data-src="https://www.youtube.com/embed/QkFKwFhhxhI"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          >
           </iframe>
           <div class="video-consent-overlay">
             <div class="video-consent-overlay-text">
-              Viewing this video may result in cookies being placed by the vendor of the video platform to which you will be directed.
-              Given the refusal of the deposit of cookies that you have expressed, in order to respect your choice, we have blocked the playback of this video.
-              If you want to continue and play the video, you must give us your consent by clicking on the button below.</div>
+              Viewing this video may result in cookies being placed by the
+              vendor of the video platform to which you will be directed. Given
+              the refusal of the deposit of cookies that you have expressed, in
+              order to respect your choice, we have blocked the playback of this
+              video. If you want to continue and play the video, you must give
+              us your consent by clicking on the button below.
+            </div>
             <div class="video-consent-overlay-accept-button">
               I accept - Launch the video
             </div>
@@ -65,9 +165,6 @@
       </div>
     </div>
 
-
-
     <script src="script/script.js"></script>
-
   </body>
 </html>
