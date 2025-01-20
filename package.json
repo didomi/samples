@@ -1,4 +1,23 @@
 {
+  "name": "samples",
+  "version": "1.0.0",
+  "description": "samples codes by Didomi",
+  "homepage": "https://github.com/didomi/samples#readme",
+  "bugs": {
+    "url": "https://github.com/didomi/samples/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/didomi/samples.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write"
+  },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0"
   },
@@ -6,5 +25,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "prettier": "^3.4.2"
   }
 }
