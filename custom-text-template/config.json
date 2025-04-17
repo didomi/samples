@@ -1,0 +1,34 @@
+{
+  "baseUrl": "https://api-staging.didomi.io",
+  "dryRun": false,
+  "token": "Bearer <<TOKEN>>",
+  "masterNoticeId": "4CPgx9bq",
+  "childrenNotices": [
+    {
+      "noticeId": "DmZPLz9D",
+      "regulationIds": ["gdpr"],
+      "macros": [
+        {
+          "key": "{{SOME_URL}}",
+          "value": {
+            "en": "REEMPLAZOEN",
+            "es": "REEMPLAZOES"
+          }
+        }
+      ]
+    },
+    {
+      "noticeId": "eAXP2xeg",
+      "regulationIds": ["gdpr"],
+      "macros": [
+        {
+          "key": "{{SOME_URL}}",
+          "value": {
+            "en": "REEMPLAZOEN",
+            "es": "REEMPLAZOES"
+          }
+        }
+      ]
+    }
+  ]
+}
