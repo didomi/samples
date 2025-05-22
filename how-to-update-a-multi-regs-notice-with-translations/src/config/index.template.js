@@ -15,12 +15,12 @@ const config = {
   /**
    * The identifier for the notice you want to update
    */
-  noticeId: "<noticeId>", // Replace with the actual Notice ID
+  noticeId: "<NOTICE_ID>", // Replace with the actual Notice ID
 
   /**
    * The identifier of your organization within Didomi
    */
-  organizationId: "<organizationId>", // Replace with the actual Organization ID
+  organizationId: "<ORGANIZATION_ID>", // Replace with the actual Organization ID
 
   /**
    * The path where the retrieved translations are stored
