@@ -1,6 +1,7 @@
 .vscode
-*.json
 data
+index.js
+macros.json
 node_modules
 package-lock.json
 secrets.js

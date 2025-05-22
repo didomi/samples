@@ -1,26 +1,26 @@
-const fs = require("fs");
-const axios = require("axios");
-const config = require("./config");
-const { get, set } = require("lodash");
 const {
   fetchAPIToken,
   writeJSONFile,
   getDefaultLanguage,
 } = require("./commons");
+const { get, set } = require("lodash");
+const { readFileSync } = require("fs");
+const axios = require("axios");
+const config = require("./config");
 
 /**
  * Fetches GDPR notice config data.
  * @param {string} token - The authorization token.
  * @returns {Promise<Object>} The GDPR notice configuration data.
  */
-const fetchGDPRNoticeConfig = async (token) => {
+const fetchGDPRNoticeConfig = async (token, noticeId = config.noticeId) => {
   try {
     const {
       data: {
         data: [data],
       },
     } = await axios.get(
-      `${config.baseUrl}/widgets/notices/configs/?notice_id=${config.noticeId}&deployed_at=null&organization_id=${config.organizationId}`,
+      `${config.baseUrl}/widgets/notices/configs/?notice_id=${noticeId}&deployed_at=null&organization_id=${config.organizationId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,6 +39,7 @@ const fetchGDPRNoticeConfig = async (token) => {
     };
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
@@ -47,7 +48,7 @@ const fetchGDPRNoticeConfig = async (token) => {
  * @param {*} categories
  * @returns
  */
-const getCategoryTranslations = (rootKey, categories = []) => {
+const getCategoryTranslations = (rootKey, categories = [], language) => {
   const filteredCategories = categories.filter(
     (item) => item.type === "category",
   );
@@ -55,91 +56,127 @@ const getCategoryTranslations = (rootKey, categories = []) => {
 
   for (const category of filteredCategories) {
     categoriesObject[`${rootKey}.categories.${category.id}.name`] =
-      getDefaultLanguage(category.name);
+      getDefaultLanguage(category.name, language);
     categoriesObject[`${rootKey}.categories.${category.id}.description`] =
-      getDefaultLanguage(category.description);
+      getDefaultLanguage(category.description, language);
   }
 
   return categoriesObject;
 };
 
-const getRegulationsTranslations = (rootKey, regulations = []) => {
+const getRegulationsTranslations = (rootKey, regulations = [], language) => {
   let regulationsObject = {};
 
   for (const regulation of regulations) {
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.popup`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.popup);
-    regulationsObject[
-      `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.popup`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.popup);
+    ] = getDefaultLanguage(regulation.config.notice?.content?.popup, language);
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.deny`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.deny);
+    ] = getDefaultLanguage(regulation.config.notice?.content?.deny, language);
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.dismiss`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.dismiss);
+    ] = getDefaultLanguage(
+      regulation.config.notice?.content?.dismiss,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.learnMore`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.learnMore);
+    ] = getDefaultLanguage(
+      regulation.config.notice?.content?.learnMore,
+      language,
+    );
 
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.title`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.title);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.title,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.text`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.text);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.text,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.agree`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.agree);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.agree,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.disagree`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.disagree);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.disagree,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.agreeToAll`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.agreeToAll);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.agreeToAll,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.disagreeToAll`
     ] = getDefaultLanguage(
       regulation.config.preferences?.content?.disagreeToAll,
+      language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.viewAllPartners`
     ] = getDefaultLanguage(
       regulation.config.preferences?.content?.viewAllPartners,
+      language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.textVendors`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.textVendors);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.textVendors,
+      language,
+    );
 
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.save`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.save);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.save,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subtitle`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.subtitle);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.subtitle,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.blockVendors`
     ] = getDefaultLanguage(
       regulation.config.preferences?.content?.blockVendors,
+      language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.authorizeVendors`
     ] = getDefaultLanguage(
       regulation.config.preferences?.content?.authorizeVendors,
+      language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subText`
-    ] = getDefaultLanguage(regulation.config.preferences?.content?.subText);
+    ] = getDefaultLanguage(
+      regulation.config.preferences?.content?.subText,
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subTextVendors`
     ] = getDefaultLanguage(
       regulation.config.preferences?.content?.subTextVendors,
+      language,
     );
 
     const categoriesObject = getCategoryTranslations(
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences`,
       regulation.config.preferences?.categories,
+      language,
     );
     regulationsObject = { ...regulationsObject, ...categoriesObject };
   }
@@ -147,7 +184,7 @@ const getRegulationsTranslations = (rootKey, regulations = []) => {
   return regulationsObject;
 };
 
-const extractAndFormatTranslatableTexts = (notice) => {
+const extractAndFormatTranslatableTexts = (notice, language) => {
   let noticeObject = {};
   let rootKey = `notice.${notice.notice_id}`;
 
@@ -158,23 +195,29 @@ const extractAndFormatTranslatableTexts = (notice) => {
 
   noticeObject[`${rootKey}.config.notice.content.popup`] = getDefaultLanguage(
     notice.config?.notice?.content?.popup,
+    language,
   );
   noticeObject[`${rootKey}.config.preferences.content.text`] =
-    getDefaultLanguage(notice.config?.preferences?.content?.text);
+    getDefaultLanguage(notice.config?.preferences?.content?.text, language);
   noticeObject[`${rootKey}.config.preferences.content.title`] =
-    getDefaultLanguage(notice.config?.preferences?.content?.title);
+    getDefaultLanguage(notice.config?.preferences?.content?.title, language);
   noticeObject[`${rootKey}.config.preferences.content.textVendors`] =
-    getDefaultLanguage(notice.config?.preferences?.content?.textVendors);
+    getDefaultLanguage(
+      notice.config?.preferences?.content?.textVendors,
+      language,
+    );
   noticeObject[`${rootKey}.config.app.privacyPolicyURL`] =
     notice.config?.app?.privacyPolicyURL;
 
   const categoriesTranslations = getCategoryTranslations(
     `${rootKey}.config.preferences`,
     notice.config?.preferences?.categories,
+    language,
   );
   const regulationsTranslations = getRegulationsTranslations(
     rootKey,
     notice.regulation_configurations,
+    language,
   );
 
   return {
@@ -185,8 +228,14 @@ const extractAndFormatTranslatableTexts = (notice) => {
 };
 
 // Patching notice configurations supports patching associated notice regulation configurations.
-const updateNoticeConfigTranslations = async (token, data, language) => {
-  const apiConfig = await fetchGDPRNoticeConfig(token);
+const updateNoticeConfigTranslations = async (
+  token,
+  data,
+  language,
+  childNoticeId,
+  dryRun = false,
+) => {
+  const apiConfig = await fetchGDPRNoticeConfig(token, childNoticeId);
 
   if (apiConfig.notice_id !== data.notice_id) {
     throw new Error(
@@ -358,6 +407,14 @@ const updateNoticeConfigTranslations = async (token, data, language) => {
     }
   }
 
+  if (dryRun) {
+    console.log(
+      `✅ Dry run mode: skipping update for notice "${childNoticeId}" in language "${language}".`,
+    );
+    console.log("Config preview:", JSON.stringify(apiConfig, null, 2));
+    return;
+  }
+
   await axios.patch(
     `${config.baseUrl}/widgets/notices/configs/${apiConfig.id}`,
     apiConfig,
@@ -443,18 +500,28 @@ const parseTranslationsToNoticeConfig = (translations) => {
   return noticeObject;
 };
 
-const getNoticeTranslations = async () => {
+const getNoticeTranslations = async (language) => {
   const token = await fetchAPIToken();
-  const config = await fetchGDPRNoticeConfig(token);
+  const noticeConfig = await fetchGDPRNoticeConfig(token);
 
-  const translatableText = extractAndFormatTranslatableTexts(config);
+  const translatableText = extractAndFormatTranslatableTexts(
+    noticeConfig,
+    language,
+  );
 
-  writeJSONFile("./data/notice_translations_input.json", translatableText);
+  writeJSONFile(config.translationsPath, translatableText);
 };
 
 const updateNoticeTranslations = async ({ filename, language }) => {
   const token = await fetchAPIToken();
-  const translations = JSON.parse(fs.readFileSync(filename, "utf8"));
+
+  let translations;
+  try {
+    translations = JSON.parse(readFileSync(filename, "utf8"));
+  } catch (err) {
+    console.error("Failed to read or parse the translation file:", err);
+    throw err;
+  }
 
   let noticeConfig = parseTranslationsToNoticeConfig(translations);
 
@@ -463,6 +530,9 @@ const updateNoticeTranslations = async ({ filename, language }) => {
 };
 
 module.exports = {
+  fetchGDPRNoticeConfig,
   getNoticeTranslations,
+  parseTranslationsToNoticeConfig,
+  updateNoticeConfigTranslations,
   updateNoticeTranslations,
 };

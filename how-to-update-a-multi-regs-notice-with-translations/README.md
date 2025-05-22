@@ -89,3 +89,63 @@ npm run purposes:pull
 npm run purposes:push --language=es --filename=purposes_translations_es.json
 # Reads translations from purposes_translations_es.json
 ```
+
+### 5. Replace macros across child notices
+
+```bash
+npm run notice:macros --language=fr
+# Uses macros.json to replace variables in translations across multiple notices
+```
+
+#### Description
+
+The `notice:macros` command allows you to perform macro substitution in child notices using a single master notice as the base. This is especially useful when managing multiple brands or variations of a consent notice that only differ by small dynamic content like brand names or partner URLs.
+
+Each macro is defined per notice in the file: `src/config/macros.json`.
+
+##### Example
+
+```json
+{
+  "childrenNotices": [
+    {
+      "noticeId": "abc123",
+      "macros": [
+        { "key": "[BRAND_NAME]", "value": "Brand A" },
+        {
+          "key": "[LINK_PARTNERS_GUCE]",
+          "value": {
+            "en": "https://brand-a.com",
+            "fr": "https://brand-a.fr"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Available CLI options
+
+| Option             | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `--language=fr`    | Run macro replacement for a specific language                       |
+| `--language=fr,en` | Run macro replacement for multiple comma-separated languages        |
+| `--language=all`   | Run for all enabled languages from the master notice config         |
+| `--dry-run=true`   | Simulate the replacement process without pushing updates to the API |
+
+#### Example Usage
+
+```bash
+npm run notice:macros --language=all --dry-run=true
+```
+
+This command will:
+
+- Fetch translations from the master notice
+- Replace defined macros per child notice
+- Print updated configurations to the console
+- Skip sending API updates due to `--dry-run=true`
+
+> ⚠️ **Note:** If a macro value is missing for the selected language, the script will throw an error.
+> ⚠️ **Warning:** Unused macros will be logged to the console for visibility.

@@ -1,24 +1,24 @@
 {
   "name": "update-multiregs-consent-notice-with-translations",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Update a multi-regulations consent notice with translations.",
   "main": "index.js",
   "scripts": {
     "help": "node src/index.js",
     "notice:pull": "node scripts/notice-pull.js",
     "notice:push": "node scripts/notice-push.js",
+    "notice:macros": "SPECIFIC_LANGUAGE=true node scripts/notice-macros.js",
     "purposes:pull": "node scripts/purposes-pull.js",
     "purposes:push": "node scripts/purposes-push.js",
-    "test": "npm run test",
     "prettier": "prettier --write ."
   },
   "authors": "Christopher Ventura, Tiberiu Feredean and Pierre Vanoverschelde",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.9.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "prettier": "^3.2.5"
+    "prettier": "^3.5.3"
   }
 }

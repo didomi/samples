@@ -15,12 +15,17 @@ const config = {
   /**
    * The identifier for the notice you want to update
    */
-  noticeId: "<NOTICE_ID>", // Replace with the actual Notice ID
+  noticeId: "<noticeId>", // Replace with the actual Notice ID
 
   /**
    * The identifier of your organization within Didomi
    */
-  organizationId: "<ORGANIZATION_ID>", // Replace with the actual Organization ID
+  organizationId: "<organizationId>", // Replace with the actual Organization ID
+
+  /**
+   * The path where the retrieved translations are stored
+   */
+  translationsPath: "./data/notice_translations_input.json",
 };
 
 module.exports = config;

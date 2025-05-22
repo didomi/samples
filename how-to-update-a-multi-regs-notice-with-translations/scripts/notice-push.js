@@ -17,20 +17,15 @@ const { updateNoticeTranslations } = require("../src/notices");
       );
     }
 
-    if (language == "en") {
-      throw new Error(
-        `"en" is the default language and cannot be updated. Please choose another language.`,
-      );
-    }
-
     await updateNoticeTranslations({ filename, language });
   } catch (error) {
-    if (error.statusCode === 401) {
+    if (error.response?.status === 401) {
       console.error(
         "⚠️  Please enter a valid authentication token.\nMore information here: https://developers.didomi.io/api/introduction/authentication",
       );
     } else {
       console.error(error);
+      throw error;
     }
   }
 })();
