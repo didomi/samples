@@ -113,7 +113,7 @@ Each macro is defined per notice in the file: `src/config/macros.json`.
       "macros": [
         { "key": "[BRAND_NAME]", "value": "Brand A" },
         {
-          "key": "[LINK_PARTNERS_GUCE]",
+          "key": "[LINK_PARTNERS]",
           "value": {
             "en": "https://brand-a.com",
             "fr": "https://brand-a.fr"
