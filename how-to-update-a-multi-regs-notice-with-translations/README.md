@@ -30,6 +30,9 @@ module.exports = {
 
   // The identifier of your organization within Didomi
   organizationId: "<ORGANIZATION_ID>", // Replace with the actual Organization ID
+
+  // The path where the retrieved translations are stored
+  translationsPath: "./data/notice_translations_input.json",
 };
 ```
 
@@ -44,7 +47,7 @@ module.exports = {
 };
 ```
 
-3. Replace placeholder texts from both files such as `<YOUR_API_TOKEN>`, `<NOTICE_ID>`, `<PRIVATE_API_KEY_ID>`, and others with actual values relevant to your environment.
+3. Replace placeholder texts from both files such as `<NOTICE_ID>`, `<ORGANIZATION_ID>`, `<PRIVATE_API_KEY_ID>`, `<PRIVATE_API_KEY_SECRET>` and others with actual values relevant to your environment.
 
 ## Usage
 
@@ -53,14 +56,15 @@ This project supports handling translations for the following entities:
 - [Purposes](https://api.didomi.io/docs/#/purposes/get_metadata_purposes)
 - [Notice Configs](https://api.didomi.io/docs/#/notices/get_widgets_notices_configs)
 
-Each entity, supports two types of commands:
+Each entity supports three types of commands:
 
 - `pull`: Fetching the entity from the Didomi API using the specified configuration and downloading the translatable properties into a JSON file.
 - `push`: Reading a translations JSON file for a given language and updating the entity in the Didomi API using the specified configuration. The `--language` and `--filename` command-line parameters must be specified.
+- _(only on notice)_ `macros`: Perform macro substitutions in child notices using a master notice as the source and values from `macros.json`. Supports `--language`, `--language=all`, and optional `--dry-run=true` mode.
 
 ### Commands
 
-There are four (4) commands currently available in this project:
+There are five (5) commands currently available in this project:
 
 **1. Pull translations for a notice config**
 
@@ -90,14 +94,14 @@ npm run purposes:push --language=es --filename=purposes_translations_es.json
 # Reads translations from purposes_translations_es.json
 ```
 
-### 5. Replace macros across child notices
+**5. Replace macros across child notices**
 
 ```bash
 npm run notice:macros --language=fr
 # Uses macros.json to replace variables in translations across multiple notices
 ```
 
-#### Description
+##### Description
 
 The `notice:macros` command allows you to perform macro substitution in child notices using a single master notice as the base. This is especially useful when managing multiple brands or variations of a consent notice that only differ by small dynamic content like brand names or partner URLs.
 
@@ -125,7 +129,7 @@ Each macro is defined per notice in the file: `src/config/macros.json`.
 }
 ```
 
-#### Available CLI options
+##### Available CLI options
 
 | Option             | Description                                                         |
 | ------------------ | ------------------------------------------------------------------- |
@@ -134,7 +138,7 @@ Each macro is defined per notice in the file: `src/config/macros.json`.
 | `--language=all`   | Run for all enabled languages from the master notice config         |
 | `--dry-run=true`   | Simulate the replacement process without pushing updates to the API |
 
-#### Example Usage
+##### Example Usage
 
 ```bash
 npm run notice:macros --language=all --dry-run=true
