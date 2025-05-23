@@ -9,11 +9,12 @@ const config = require("./config");
 
 const replaceNoticesWithMacros = async ({
   language,
+  position,
   childrenNotices,
   dryRun = false,
 }) => {
   // Get the translations from the master notice configured in the `config.noticeId`
-  await getNoticeTranslations(language);
+  await getNoticeTranslations(language, position);
 
   // Parse the previously fetched translations
   let translations;
@@ -83,6 +84,7 @@ const replaceNoticesWithMacros = async ({
       token,
       noticeConfig,
       language,
+      position,
       child.noticeId,
       dryRun,
     );

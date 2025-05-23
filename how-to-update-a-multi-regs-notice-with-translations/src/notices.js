@@ -64,13 +64,21 @@ const getCategoryTranslations = (rootKey, categories = [], language) => {
   return categoriesObject;
 };
 
-const getRegulationsTranslations = (rootKey, regulations = [], language) => {
+const getRegulationsTranslations = (
+  rootKey,
+  regulations = [],
+  language,
+  positionKey,
+) => {
   let regulationsObject = {};
 
   for (const regulation of regulations) {
     regulationsObject[
-      `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.popup`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.popup, language);
+      `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.${positionKey}`
+    ] = getDefaultLanguage(
+      regulation.config.notice?.content?.[positionKey],
+      language,
+    );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.deny`
     ] = getDefaultLanguage(regulation.config.notice?.content?.deny, language);
@@ -184,19 +192,20 @@ const getRegulationsTranslations = (rootKey, regulations = [], language) => {
   return regulationsObject;
 };
 
-const extractAndFormatTranslatableTexts = (notice, language) => {
+const extractAndFormatTranslatableTexts = (notice, language, position) => {
   let noticeObject = {};
   let rootKey = `notice.${notice.notice_id}`;
 
   console.log("Notice ID: ", notice.notice_id);
-  console.log("NoticeConfig ID: ", notice.id);
-  console.log("Default Language: ", notice.config?.languages?.default);
-  console.log("Enabled Languages: ", notice.config?.languages?.enabled, "\n");
+  console.log("Notice config ID: ", notice.id);
+  console.log("Default language: ", notice.config?.languages?.default);
+  console.log("Enabled languages: ", notice.config?.languages?.enabled);
+  console.log("Notice position: ", position, "\n");
 
-  noticeObject[`${rootKey}.config.notice.content.popup`] = getDefaultLanguage(
-    notice.config?.notice?.content?.popup,
-    language,
-  );
+  const positionKey = position === "popup" ? "popup" : "notice";
+
+  noticeObject[`${rootKey}.config.notice.content.${positionKey}`] =
+    getDefaultLanguage(notice.config?.notice?.content?.[positionKey], language);
   noticeObject[`${rootKey}.config.preferences.content.text`] =
     getDefaultLanguage(notice.config?.preferences?.content?.text, language);
   noticeObject[`${rootKey}.config.preferences.content.title`] =
@@ -218,6 +227,7 @@ const extractAndFormatTranslatableTexts = (notice, language) => {
     rootKey,
     notice.regulation_configurations,
     language,
+    positionKey,
   );
 
   return {
@@ -232,6 +242,7 @@ const updateNoticeConfigTranslations = async (
   token,
   data,
   language,
+  position,
   childNoticeId,
   dryRun = false,
 ) => {
@@ -249,10 +260,12 @@ const updateNoticeConfigTranslations = async (
     );
   }
 
+  const positionKey = position === "popup" ? "popup" : "notice";
+
   set(
     apiConfig,
-    `config.notice.content.popup.${language}`,
-    data.config?.notice?.content?.popup,
+    `config.notice.content.${positionKey}.${language}`,
+    data.config?.notice?.content?.[positionKey],
   );
   set(
     apiConfig,
@@ -294,8 +307,8 @@ const updateNoticeConfigTranslations = async (
     ) {
       set(
         regulation,
-        `config.notice.content.popup.${language}`,
-        regulationTranslation.config?.notice?.content?.popup,
+        `config.notice.content.${positionKey}.${language}`,
+        regulationTranslation.config?.notice?.content?.[positionKey],
       );
       set(
         regulation,
@@ -500,13 +513,14 @@ const parseTranslationsToNoticeConfig = (translations) => {
   return noticeObject;
 };
 
-const getNoticeTranslations = async (language) => {
+const getNoticeTranslations = async (language, position) => {
   const token = await fetchAPIToken();
   const noticeConfig = await fetchGDPRNoticeConfig(token);
 
   const translatableText = extractAndFormatTranslatableTexts(
     noticeConfig,
     language,
+    position,
   );
 
   writeJSONFile(config.translationsPath, translatableText);

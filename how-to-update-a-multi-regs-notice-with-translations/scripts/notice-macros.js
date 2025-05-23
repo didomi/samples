@@ -4,37 +4,57 @@ const { fetchGDPRNoticeConfig } = require("../src/notices");
 const { replaceNoticesWithMacros } = require("../src/macros");
 
 /**
- * Fetches the list of enabled languages from the GDPR notice configuration.
+ * Fetches the list of enabled languages and the notice position
+ * from the GDPR notice configuration.
  *
  * @async
- * @returns {Promise<string[]>} An array of enabled language codes.
+ * @returns {Promise<{ languages: string[], position: string }>}
+ * An object containing an array of enabled language codes and the notice position.
  * @throws {Error} If no enabled languages are found in the configuration.
  */
-const getEnabledLanguages = async () => {
+const getNoticeConfigDetails = async () => {
   const token = await fetchAPIToken();
   const noticeConfig = await fetchGDPRNoticeConfig(token);
 
   const enabledLanguages = noticeConfig?.config?.languages?.enabled;
+
   if (!Array.isArray(enabledLanguages) || enabledLanguages.length === 0) {
     throw new Error("No enabled languages found in notice configuration.");
   }
 
-  return enabledLanguages;
+  // Find the default GDPR regulation configuration
+  const defaultGDPRConfig = noticeConfig.regulation_configurations.find(
+    (config) =>
+      config.regulation_id === "gdpr" && config.is_default_regulation_config,
+  );
+
+  if (!defaultGDPRConfig) {
+    throw new Error("Default GDPR regulation configuration not found.");
+  }
+
+  const noticePosition = defaultGDPRConfig?.config?.notice?.position;
+
+  return {
+    languages: enabledLanguages,
+    position: noticePosition,
+  };
 };
 
 /**
- * Replaces macros in GDPR notices for a given language.
+ * Replaces macros in GDPR notices for a given language and position.
  *
  * @async
  * @param {string} language - The language code to process.
+ * @param {string} position - The GDPR notice position.
  * @param {boolean} dryRun - Whether to simulate the process without applying changes.
  * @returns {Promise<void>}
  */
-const runMacrosReplacement = async (language, dryRun) => {
+const runMacrosReplacement = async (language, position, dryRun) => {
   console.log(`✅ Running macros replacement for language: ${language}\n`);
 
   await replaceNoticesWithMacros({
     language,
+    position,
     childrenNotices,
     dryRun,
   });
@@ -66,16 +86,15 @@ const runMacrosReplacement = async (language, dryRun) => {
       );
     }
 
-    let enabledLanguages = [];
+    const { languages, position } = await getNoticeConfigDetails();
 
-    if (language.toLowerCase() === "all") {
-      enabledLanguages = await getEnabledLanguages();
-    } else {
-      enabledLanguages = language.split(",").map((lang) => lang.trim());
-    }
+    const enabledLanguages =
+      language.toLowerCase() === "all"
+        ? languages
+        : language.split(",").map((lang) => lang.trim());
 
     for (const lang of enabledLanguages) {
-      await runMacrosReplacement(lang, dryRun);
+      await runMacrosReplacement(lang, position, dryRun);
     }
 
     console.log(

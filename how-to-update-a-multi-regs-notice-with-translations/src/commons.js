@@ -23,16 +23,18 @@ const fetchAPIToken = async () => {
 };
 
 /**
- * If the environment variable `SPECIFIC_LANGUAGE` is set to "true", the function
- * attempts to retrieve the translation for the language defined in `npm_config_language`, otherwise falls back to "en".
+ * Returns a language-specific value from the given object.
+ *
+ * If the environment variable `SPECIFIC_LANGUAGE` is set to "true", it will first
+ * attempt to retrieve `object[language]`. If not found, or if `SPECIFIC_LANGUAGE` is not "true",
+ * it returns `object.en` as the fallback.
+ *
  * The language specific option is used when replacing macros.
  *
  */
-const getDefaultLanguage = (object, language) => {
-  const lang = process.env.SPECIFIC_LANGUAGE === "true" ? language : null;
-
-  return object?.[lang] ?? object?.en ?? "";
-};
+const getDefaultLanguage = (object, language) =>
+  object?.[process.env.SPECIFIC_LANGUAGE === "true" ? language : "en"] ??
+  object?.en;
 
 const writeJSONFile = (path, data) => {
   try {
