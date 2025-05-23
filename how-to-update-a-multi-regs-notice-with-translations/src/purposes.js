@@ -1,7 +1,7 @@
 const {
   fetchAPIToken,
   writeJSONFile,
-  getDefaultLanguage,
+  getLanguageOrDefault,
 } = require("./commons");
 const { readFileSync } = require("fs");
 const { set } = require("lodash");
@@ -37,8 +37,8 @@ const fetchAllPurposes = async (token) => {
  * Map a purpose to a translatable object
  */
 const mapPurposeToTranslations = (purpose) => ({
-  description: getDefaultLanguage(purpose.description),
-  details: getDefaultLanguage(purpose.details),
+  description: getLanguageOrDefault(purpose.description),
+  details: getLanguageOrDefault(purpose.details),
 });
 
 /**

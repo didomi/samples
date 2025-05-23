@@ -1,7 +1,8 @@
 const {
   fetchAPIToken,
   writeJSONFile,
-  getDefaultLanguage,
+  getLanguageOrDefault,
+  getPositionKey,
 } = require("./commons");
 const { get, set } = require("lodash");
 const { readFileSync } = require("fs");
@@ -56,9 +57,9 @@ const getCategoryTranslations = (rootKey, categories = [], language) => {
 
   for (const category of filteredCategories) {
     categoriesObject[`${rootKey}.categories.${category.id}.name`] =
-      getDefaultLanguage(category.name, language);
+      getLanguageOrDefault(category.name, language);
     categoriesObject[`${rootKey}.categories.${category.id}.description`] =
-      getDefaultLanguage(category.description, language);
+      getLanguageOrDefault(category.description, language);
   }
 
   return categoriesObject;
@@ -75,108 +76,108 @@ const getRegulationsTranslations = (
   for (const regulation of regulations) {
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.${positionKey}`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.notice?.content?.[positionKey],
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.deny`
-    ] = getDefaultLanguage(regulation.config.notice?.content?.deny, language);
+    ] = getLanguageOrDefault(regulation.config.notice?.content?.deny, language);
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.dismiss`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.notice?.content?.dismiss,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.notice.content.learnMore`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.notice?.content?.learnMore,
       language,
     );
 
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.title`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.title,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.text`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.text,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.agree`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.agree,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.disagree`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.disagree,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.agreeToAll`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.agreeToAll,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.disagreeToAll`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.disagreeToAll,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.viewAllPartners`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.viewAllPartners,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.textVendors`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.textVendors,
       language,
     );
 
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.save`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.save,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subtitle`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.subtitle,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.blockVendors`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.blockVendors,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.authorizeVendors`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.authorizeVendors,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subText`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.subText,
       language,
     );
     regulationsObject[
       `${rootKey}.regulation_configurations.${regulation.regulation_id}.config.preferences.content.subTextVendors`
-    ] = getDefaultLanguage(
+    ] = getLanguageOrDefault(
       regulation.config.preferences?.content?.subTextVendors,
       language,
     );
@@ -196,22 +197,25 @@ const extractAndFormatTranslatableTexts = (notice, language, position) => {
   let noticeObject = {};
   let rootKey = `notice.${notice.notice_id}`;
 
+  const positionKey = getPositionKey(position);
+
   console.log("Notice ID: ", notice.notice_id);
   console.log("Notice config ID: ", notice.id);
   console.log("Default language: ", notice.config?.languages?.default);
   console.log("Enabled languages: ", notice.config?.languages?.enabled);
-  console.log("Notice position: ", position, "\n");
-
-  const positionKey = position === "popup" ? "popup" : "notice";
+  console.log("Notice position: ", positionKey, "\n");
 
   noticeObject[`${rootKey}.config.notice.content.${positionKey}`] =
-    getDefaultLanguage(notice.config?.notice?.content?.[positionKey], language);
+    getLanguageOrDefault(
+      notice.config?.notice?.content?.[positionKey],
+      language,
+    );
   noticeObject[`${rootKey}.config.preferences.content.text`] =
-    getDefaultLanguage(notice.config?.preferences?.content?.text, language);
+    getLanguageOrDefault(notice.config?.preferences?.content?.text, language);
   noticeObject[`${rootKey}.config.preferences.content.title`] =
-    getDefaultLanguage(notice.config?.preferences?.content?.title, language);
+    getLanguageOrDefault(notice.config?.preferences?.content?.title, language);
   noticeObject[`${rootKey}.config.preferences.content.textVendors`] =
-    getDefaultLanguage(
+    getLanguageOrDefault(
       notice.config?.preferences?.content?.textVendors,
       language,
     );
@@ -260,7 +264,7 @@ const updateNoticeConfigTranslations = async (
     );
   }
 
-  const positionKey = position === "popup" ? "popup" : "notice";
+  const positionKey = getPositionKey(position);
 
   set(
     apiConfig,

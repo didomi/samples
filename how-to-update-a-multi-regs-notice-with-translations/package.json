@@ -7,7 +7,7 @@
     "help": "node src/index.js",
     "notice:pull": "node scripts/notice-pull.js",
     "notice:push": "node scripts/notice-push.js",
-    "notice:macros": "SPECIFIC_LANGUAGE=true node scripts/notice-macros.js",
+    "notice:macros": "node scripts/notice-macros.js",
     "purposes:pull": "node scripts/purposes-pull.js",
     "purposes:push": "node scripts/purposes-push.js",
     "prettier": "prettier --write ."

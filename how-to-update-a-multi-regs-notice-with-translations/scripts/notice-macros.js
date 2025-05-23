@@ -41,26 +41,6 @@ const getNoticeConfigDetails = async () => {
 };
 
 /**
- * Replaces macros in GDPR notices for a given language and position.
- *
- * @async
- * @param {string} language - The language code to process.
- * @param {string} position - The GDPR notice position.
- * @param {boolean} dryRun - Whether to simulate the process without applying changes.
- * @returns {Promise<void>}
- */
-const runMacrosReplacement = async (language, position, dryRun) => {
-  console.log(`✅ Running macros replacement for language: ${language}\n`);
-
-  await replaceNoticesWithMacros({
-    language,
-    position,
-    childrenNotices,
-    dryRun,
-  });
-};
-
-/**
  * Determines which languages to process and initiates the macros replacement.
  *
  * Uses command-line arguments:
@@ -94,7 +74,14 @@ const runMacrosReplacement = async (language, position, dryRun) => {
         : language.split(",").map((lang) => lang.trim());
 
     for (const lang of enabledLanguages) {
-      await runMacrosReplacement(lang, position, dryRun);
+      console.log(`✅ Running macros replacement for language: ${lang}\n`);
+
+      await replaceNoticesWithMacros({
+        language: lang,
+        position,
+        childrenNotices,
+        dryRun,
+      });
     }
 
     console.log(

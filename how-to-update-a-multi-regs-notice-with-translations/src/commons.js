@@ -25,16 +25,26 @@ const fetchAPIToken = async () => {
 /**
  * Returns a language-specific value from the given object.
  *
- * If the environment variable `SPECIFIC_LANGUAGE` is set to "true", it will first
- * attempt to retrieve `object[language]`. If not found, or if `SPECIFIC_LANGUAGE` is not "true",
- * it returns `object.en` as the fallback.
+ * This function attempts to retrieve `object[language]`. If the specified language
+ * is not found in the object, it falls back to `object.en` if available.
  *
  * The language specific option is used when replacing macros.
  *
+ * @param {Object} object - The object containing language-specific values.
+ * @param {string} language - The language code to retrieve.
+ * @returns {*} The value corresponding to the specified language, or English as fallback.
  */
-const getDefaultLanguage = (object, language) =>
-  object?.[process.env.SPECIFIC_LANGUAGE === "true" ? language : "en"] ??
-  object?.en;
+const getLanguageOrDefault = (object, language) =>
+  object?.[language] ?? object?.en;
+
+/**
+ * Returns the appropriate key based on position.
+ *
+ * @param {string} [position] - The position type (e.g., "popup", "notice", etc.). Defaults to "popup" if undefined.
+ * @returns {string} Either "popup" or "notice" depending on input; defaults to "popup" if undefined.
+ */
+const getPositionKey = (position) =>
+  position === "popup" || position === undefined ? "popup" : "notice";
 
 const writeJSONFile = (path, data) => {
   try {
@@ -48,6 +58,7 @@ const writeJSONFile = (path, data) => {
 
 module.exports = {
   fetchAPIToken,
-  getDefaultLanguage,
+  getLanguageOrDefault,
+  getPositionKey,
   writeJSONFile,
 };
