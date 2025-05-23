@@ -1,12 +1,12 @@
-const fs = require("fs");
-const axios = require("axios");
-const { set } = require("lodash");
-const config = require("./config");
 const {
   fetchAPIToken,
   writeJSONFile,
-  getDefaultLanguage,
+  getLanguageOrDefault,
 } = require("./commons");
+const { readFileSync } = require("fs");
+const { set } = require("lodash");
+const axios = require("axios");
+const config = require("./config");
 
 /**
  * Fetches all purposes from organization
@@ -29,6 +29,7 @@ const fetchAllPurposes = async (token) => {
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
@@ -36,8 +37,8 @@ const fetchAllPurposes = async (token) => {
  * Map a purpose to a translatable object
  */
 const mapPurposeToTranslations = (purpose) => ({
-  description: getDefaultLanguage(purpose.description),
-  details: getDefaultLanguage(purpose.details),
+  description: getLanguageOrDefault(purpose.description),
+  details: getLanguageOrDefault(purpose.details),
 });
 
 /**
@@ -126,10 +127,10 @@ const updatePurposes = async (token, translations, language) => {
         },
       );
 
-      console.log(`Purpose ${purpose.id} updated`);
+      console.log(`✅ Purpose ${purpose.id} updated`);
     } catch (error) {
       console.error(
-        `Purpose ${purpose.id} failed to update due to an error:`,
+        `❌ Purpose ${purpose.id} failed to update due to an error:`,
         error,
       );
       throw error;
@@ -142,7 +143,14 @@ const updatePurposes = async (token, translations, language) => {
  */
 const updatePurposesTranslations = async ({ filename, language }) => {
   const token = await fetchAPIToken();
-  const translations = JSON.parse(fs.readFileSync(filename, "utf8"));
+
+  let translations;
+  try {
+    translations = JSON.parse(readFileSync(filename, "utf8"));
+  } catch (err) {
+    console.error("Failed to read or parse the translation file:", err);
+    throw err;
+  }
 
   // Update the purposes
   await updatePurposes(token, translations, language);

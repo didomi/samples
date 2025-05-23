@@ -1,6 +1,7 @@
 .vscode
-*.json
 data
 node_modules
 package-lock.json
-secrets.js
+src/config/index.js
+src/config/macros.json
+src/config/secrets.js

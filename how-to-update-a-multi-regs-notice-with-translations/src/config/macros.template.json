@@ -1,0 +1,38 @@
+{
+  "childrenNotices": [
+    {
+      "noticeId": "<noticeId>",
+      "macros": [
+        {
+          "key": "[BRAND_NAME]",
+          "value": "<value>"
+        },
+        {
+          "key": "[KEY]",
+          "value": {
+            "en": "<value_en>",
+            "fr": "<value_fr>",
+            "es": "<value_es>"
+          }
+        }
+      ]
+    },
+    {
+      "noticeId": "<noticeId2>",
+      "macros": [
+        {
+          "key": "[BRAND_NAME]",
+          "value": "<value>"
+        },
+        {
+          "key": "[KEY]",
+          "value": {
+            "en": "<value_en>",
+            "fr": "<value_fr>",
+            "es": "<value_es>"
+          }
+        }
+      ]
+    }
+  ]
+}

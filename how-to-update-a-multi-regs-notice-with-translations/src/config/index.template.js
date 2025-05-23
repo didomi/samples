@@ -21,6 +21,11 @@ const config = {
    * The identifier of your organization within Didomi
    */
   organizationId: "<ORGANIZATION_ID>", // Replace with the actual Organization ID
+
+  /**
+   * The path where the retrieved translations are stored
+   */
+  translationsPath: "./data/notice_translations_input.json",
 };
 
 module.exports = config;
