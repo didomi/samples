@@ -27,7 +27,7 @@ function getObjectValues(obj) {
    * Please keep in mind that the default cookies names can be changed:
    * https://developers.didomi.io/cmp/web-sdk/consent-notice/cookies#cookie-name
    * and you need to also add the didomi_token_${regulation} to this list if you have other non GDPR regulations.
-   * For instance when having CCPA, the default cookie name is didomi_token_ccpa.
+   * For instance when having CPRA, the default cookie name is didomi_token_cpra.
    */
   var itemsToKeep = ["euconsent-v2", "didomi_token"];
   /**
