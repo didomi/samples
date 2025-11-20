@@ -275,12 +275,16 @@ The script uses optimized pandas operations:
 - The script handles missing input columns gracefully
 - Missing fields will appear as empty/null in output
 
+## Important Notice
+
+**This script is offered as a helper script to get you started.** It is not designed for long-term use, and no updates or active support will be provided. The script is provided as-is to assist with the transition from the old to new ACM export format.
+
 ## License
 
 This tool is provided as-is for converting Didomi ACM export data formats.
 
 ## Support
 
-For issues or questions about:
-- **Didomi ACM Export Format**: Contact Didomi support
-- **This Script**: Check the source code comments or create an issue
+For issues or questions:
+- **Didomi ACM Export Format**: Contact [support@didomi.io](mailto:support@didomi.io)
+- **This Script**: This is a helper script provided as-is with no active support or maintenance
