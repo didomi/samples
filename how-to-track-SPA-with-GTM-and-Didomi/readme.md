@@ -102,7 +102,7 @@ window.didomiEventListeners.push({
 
 1. We create the variable.
 Didomi's SDK natively send variables to the dataLayer each time the visitor interacts with the cookie notice.  
-One of these variables is `didomiVendorsConsent` and it contains the list of vendors that have been accepted
+One of these variables is `didomiVendorsEnabled` and it contains the list of vendors that have been accepted
 
 <img src="doc-assets/gtm-variable.png" width=500>
 <img src="doc-assets/gtm-variable-detail.png" width=500>
@@ -120,7 +120,7 @@ For this example, our analytics tool is just a `console.log()` file that sends t
 The trigger needs to check two conditions :
     - the event `custom_analytic_event` has been sent to the dataLayer
     AND
-    - the analytic vendor has been accepted on the cookie notice. This information can be verified if the vendor SDK-ID is present in the `didomiVendorsConsent` variable.
+    - the analytic vendor has been accepted on the cookie notice. This information can be verified if the vendor SDK-ID is present in the `didomiVendorsEnabled` variable.
 
 
 <img src="doc-assets/gtm-trigger.png" width=500>
