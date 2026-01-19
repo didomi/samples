@@ -29,7 +29,7 @@ function getObjectValues(obj) {
    * and you need to also add the didomi_token_${regulation} to this list if you have other non GDPR regulations.
    * For instance when having CPRA, the default cookie name is didomi_token_cpra.
    */
-  var itemsToKeep = ["euconsent-v2", "didomi_token"];
+  var itemsToKeep = ["euconsent-v2", "didomi_token", "didomi_dcs"];
   /**
    * Use this variable if you need to keep cookies matching a specific pattern
    */
